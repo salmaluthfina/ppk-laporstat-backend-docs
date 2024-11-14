@@ -1,0 +1,5950 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "OpenAPI definition",
+      "version": "v0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8080",
+        "description": "Generated server url"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Authentication",
+        "description": "API untuk mengelola login dan register pengguna"
+      },
+      {
+        "name": "Feedback",
+        "description": "API untuk mengelola feedback dari pengguna"
+      },
+      {
+        "name": "Notification",
+        "description": "API untuk mengelola profile"
+      },
+      {
+        "name": "Chat Message",
+        "description": "API untuk mengelola pesan antara pengguna dengan admin kategori"
+      },
+      {
+        "name": "Notification",
+        "description": "API untuk mengelola notifikasi pelapor dan admin"
+      },
+      {
+        "name": "Pengaduan",
+        "description": "API untuk mengelola pengaduan pelapor"
+      }
+    ],
+    "paths": {
+      "/chatMessages": {
+        "get": {
+          "tags": [
+            "chat-message-entity-controller"
+          ],
+          "description": "get-chatmessage",
+          "operationId": "getCollectionResource-chatmessage-get_1",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Zero-based page index (0..N)",
+              "required": false,
+              "schema": {
+                "minimum": 0,
+                "type": "integer",
+                "default": 0
+              }
+            },
+            {
+              "name": "size",
+              "in": "query",
+              "description": "The size of the page to be returned",
+              "required": false,
+              "schema": {
+                "minimum": 1,
+                "type": "integer",
+                "default": 20
+              }
+            },
+            {
+              "name": "sort",
+              "in": "query",
+              "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelChatMessage"
+                  }
+                },
+                "application/x-spring-data-compact+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelChatMessage"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "chat-message-entity-controller"
+          ],
+          "description": "create-chatmessage",
+          "operationId": "postCollectionResource-chatmessage-post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatMessageRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/chatMessages/search/findByPengaduanIdOrderByTimestampAsc": {
+        "get": {
+          "tags": [
+            "chat-message-search-controller"
+          ],
+          "operationId": "executeSearch-chatmessage-get",
+          "parameters": [
+            {
+              "name": "pengaduanId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/chatMessages/{id}": {
+        "get": {
+          "tags": [
+            "chat-message-entity-controller"
+          ],
+          "description": "get-chatmessage",
+          "operationId": "getItemResource-chatmessage-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "chat-message-entity-controller"
+          ],
+          "description": "update-chatmessage",
+          "operationId": "putItemResource-chatmessage-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatMessageRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "chat-message-entity-controller"
+          ],
+          "description": "delete-chatmessage",
+          "operationId": "deleteItemResource-chatmessage-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "chat-message-entity-controller"
+          ],
+          "description": "patch-chatmessage",
+          "operationId": "patchItemResource-chatmessage-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatMessageRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/chatMessages/{id}/pengaduan": {
+        "get": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "get-pengaduan-by-chatmessage-Id",
+          "operationId": "followPropertyReference-chatmessage-get_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "update-pengaduan-by-chatmessage-Id",
+          "operationId": "createPropertyReference-chatmessage-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "delete-pengaduan-by-chatmessage-Id",
+          "operationId": "deletePropertyReference-chatmessage-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "patch-pengaduan-by-chatmessage-Id",
+          "operationId": "createPropertyReference-chatmessage-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/chatMessages/{id}/pengaduan/{propertyId}": {
+        "get": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "get-pengaduan-by-chatmessage-Id",
+          "operationId": "followPropertyReference-chatmessage-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "delete-pengaduan-by-chatmessage-Id",
+          "operationId": "deletePropertyReferenceId-chatmessage-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/chatMessages/{id}/sender": {
+        "get": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "get-user-by-chatmessage-Id",
+          "operationId": "followPropertyReference-chatmessage-get_2_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "update-user-by-chatmessage-Id",
+          "operationId": "createPropertyReference-chatmessage-put_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "delete-user-by-chatmessage-Id",
+          "operationId": "deletePropertyReference-chatmessage-delete_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "patch-user-by-chatmessage-Id",
+          "operationId": "createPropertyReference-chatmessage-patch_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/chatMessages/{id}/sender/{propertyId}": {
+        "get": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "get-user-by-chatmessage-Id",
+          "operationId": "followPropertyReference-chatmessage-get_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "chat-message-property-reference-controller"
+          ],
+          "description": "delete-user-by-chatmessage-Id",
+          "operationId": "deletePropertyReferenceId-chatmessage-delete_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/feedbacks": {
+        "get": {
+          "tags": [
+            "feedback-entity-controller"
+          ],
+          "description": "get-feedback",
+          "operationId": "getCollectionResource-feedback-get_1",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Zero-based page index (0..N)",
+              "required": false,
+              "schema": {
+                "minimum": 0,
+                "type": "integer",
+                "default": 0
+              }
+            },
+            {
+              "name": "size",
+              "in": "query",
+              "description": "The size of the page to be returned",
+              "required": false,
+              "schema": {
+                "minimum": 1,
+                "type": "integer",
+                "default": 20
+              }
+            },
+            {
+              "name": "sort",
+              "in": "query",
+              "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelFeedback"
+                  }
+                },
+                "application/x-spring-data-compact+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelFeedback"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "feedback-entity-controller"
+          ],
+          "description": "create-feedback",
+          "operationId": "postCollectionResource-feedback-post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/feedbacks/search/findByPengaduanId": {
+        "get": {
+          "tags": [
+            "feedback-search-controller"
+          ],
+          "operationId": "executeSearch-feedback-get",
+          "parameters": [
+            {
+              "name": "pengaduanId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/feedbacks/{id}": {
+        "get": {
+          "tags": [
+            "feedback-entity-controller"
+          ],
+          "description": "get-feedback",
+          "operationId": "getItemResource-feedback-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "feedback-entity-controller"
+          ],
+          "description": "update-feedback",
+          "operationId": "putItemResource-feedback-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "feedback-entity-controller"
+          ],
+          "description": "delete-feedback",
+          "operationId": "deleteItemResource-feedback-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "feedback-entity-controller"
+          ],
+          "description": "patch-feedback",
+          "operationId": "patchItemResource-feedback-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/feedbacks/{id}/pengaduan": {
+        "get": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "get-pengaduan-by-feedback-Id",
+          "operationId": "followPropertyReference-feedback-get_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "update-pengaduan-by-feedback-Id",
+          "operationId": "createPropertyReference-feedback-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "delete-pengaduan-by-feedback-Id",
+          "operationId": "deletePropertyReference-feedback-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "patch-pengaduan-by-feedback-Id",
+          "operationId": "createPropertyReference-feedback-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/feedbacks/{id}/pengaduan/{propertyId}": {
+        "get": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "get-pengaduan-by-feedback-Id",
+          "operationId": "followPropertyReference-feedback-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "delete-pengaduan-by-feedback-Id",
+          "operationId": "deletePropertyReferenceId-feedback-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/feedbacks/{id}/user": {
+        "get": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "get-user-by-feedback-Id",
+          "operationId": "followPropertyReference-feedback-get_2_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "update-user-by-feedback-Id",
+          "operationId": "createPropertyReference-feedback-put_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "delete-user-by-feedback-Id",
+          "operationId": "deletePropertyReference-feedback-delete_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "patch-user-by-feedback-Id",
+          "operationId": "createPropertyReference-feedback-patch_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/feedbacks/{id}/user/{propertyId}": {
+        "get": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "get-user-by-feedback-Id",
+          "operationId": "followPropertyReference-feedback-get_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "feedback-property-reference-controller"
+          ],
+          "description": "delete-user-by-feedback-Id",
+          "operationId": "deletePropertyReferenceId-feedback-delete_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/notifications": {
+        "get": {
+          "tags": [
+            "notification-entity-controller"
+          ],
+          "description": "get-notification",
+          "operationId": "getCollectionResource-notification-get_1",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Zero-based page index (0..N)",
+              "required": false,
+              "schema": {
+                "minimum": 0,
+                "type": "integer",
+                "default": 0
+              }
+            },
+            {
+              "name": "size",
+              "in": "query",
+              "description": "The size of the page to be returned",
+              "required": false,
+              "schema": {
+                "minimum": 1,
+                "type": "integer",
+                "default": 20
+              }
+            },
+            {
+              "name": "sort",
+              "in": "query",
+              "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelNotification"
+                  }
+                },
+                "application/x-spring-data-compact+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelNotification"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "notification-entity-controller"
+          ],
+          "description": "create-notification",
+          "operationId": "postCollectionResource-notification-post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/notifications/search/findByRecipient": {
+        "get": {
+          "tags": [
+            "notification-search-controller"
+          ],
+          "operationId": "executeSearch-notification-get",
+          "parameters": [
+            {
+              "name": "recipient",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelNotification"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/notifications/search/findByRecipientAndTypeOrderByTimestampDesc": {
+        "get": {
+          "tags": [
+            "notification-search-controller"
+          ],
+          "operationId": "executeSearch-notification-get_1",
+          "parameters": [
+            {
+              "name": "recipient",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelNotification"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/notifications/search/findByRecipientOrderByTimestampDesc": {
+        "get": {
+          "tags": [
+            "notification-search-controller"
+          ],
+          "operationId": "executeSearch-notification-get_2",
+          "parameters": [
+            {
+              "name": "recipient",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelNotification"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/notifications/search/findByUserId": {
+        "get": {
+          "tags": [
+            "notification-search-controller"
+          ],
+          "operationId": "executeSearch-notification-get_3",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelNotification"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/notifications/search/findByUserIdOrderByTimestampDesc": {
+        "get": {
+          "tags": [
+            "notification-search-controller"
+          ],
+          "operationId": "executeSearch-notification-get_4",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelNotification"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/notifications/{id}": {
+        "get": {
+          "tags": [
+            "notification-entity-controller"
+          ],
+          "description": "get-notification",
+          "operationId": "getItemResource-notification-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "notification-entity-controller"
+          ],
+          "description": "update-notification",
+          "operationId": "putItemResource-notification-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "notification-entity-controller"
+          ],
+          "description": "delete-notification",
+          "operationId": "deleteItemResource-notification-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "notification-entity-controller"
+          ],
+          "description": "patch-notification",
+          "operationId": "patchItemResource-notification-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/notifications/{id}/user": {
+        "get": {
+          "tags": [
+            "notification-property-reference-controller"
+          ],
+          "description": "get-user-by-notification-Id",
+          "operationId": "followPropertyReference-notification-get_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "notification-property-reference-controller"
+          ],
+          "description": "update-user-by-notification-Id",
+          "operationId": "createPropertyReference-notification-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "notification-property-reference-controller"
+          ],
+          "description": "delete-user-by-notification-Id",
+          "operationId": "deletePropertyReference-notification-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "notification-property-reference-controller"
+          ],
+          "description": "patch-user-by-notification-Id",
+          "operationId": "createPropertyReference-notification-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/notifications/{id}/user/{propertyId}": {
+        "get": {
+          "tags": [
+            "notification-property-reference-controller"
+          ],
+          "description": "get-user-by-notification-Id",
+          "operationId": "followPropertyReference-notification-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "notification-property-reference-controller"
+          ],
+          "description": "delete-user-by-notification-Id",
+          "operationId": "deletePropertyReferenceId-notification-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans": {
+        "get": {
+          "tags": [
+            "pengaduan-entity-controller"
+          ],
+          "description": "get-pengaduan",
+          "operationId": "getCollectionResource-pengaduan-get_1",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Zero-based page index (0..N)",
+              "required": false,
+              "schema": {
+                "minimum": 0,
+                "type": "integer",
+                "default": 0
+              }
+            },
+            {
+              "name": "size",
+              "in": "query",
+              "description": "The size of the page to be returned",
+              "required": false,
+              "schema": {
+                "minimum": 1,
+                "type": "integer",
+                "default": 20
+              }
+            },
+            {
+              "name": "sort",
+              "in": "query",
+              "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelPengaduan"
+                  }
+                },
+                "application/x-spring-data-compact+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelPengaduan"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "pengaduan-entity-controller"
+          ],
+          "description": "create-pengaduan",
+          "operationId": "postCollectionResource-pengaduan-post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PengaduanRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/pengaduans/search/findByCategory": {
+        "get": {
+          "tags": [
+            "pengaduan-search-controller"
+          ],
+          "operationId": "executeSearch-pengaduan-get",
+          "parameters": [
+            {
+              "name": "category",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "PELAYANAN_DAN_KUALITAS",
+                  "SISTEM_DAN_INFRASTRUKTUR",
+                  "KEBIJAKAN_DAN_REGULASI"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/search/findByPriority": {
+        "get": {
+          "tags": [
+            "pengaduan-search-controller"
+          ],
+          "operationId": "executeSearch-pengaduan-get_1",
+          "parameters": [
+            {
+              "name": "priority",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "TINGGI",
+                  "SEDANG",
+                  "RENDAH"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/search/findByStatus": {
+        "get": {
+          "tags": [
+            "pengaduan-search-controller"
+          ],
+          "operationId": "executeSearch-pengaduan-get_2",
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "BERHASIL_DIBUAT",
+                  "DIPROSES",
+                  "MENUNGGU_KLARIFIKASI",
+                  "SELESAI",
+                  "DITUTUP"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/search/findByUserId": {
+        "get": {
+          "tags": [
+            "pengaduan-search-controller"
+          ],
+          "operationId": "executeSearch-pengaduan-get_3",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/search/findPengaduanByStatusAndKategoriOrderByPrioritasDesc": {
+        "get": {
+          "tags": [
+            "pengaduan-search-controller"
+          ],
+          "operationId": "executeSearch-pengaduan-get_4",
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "BERHASIL_DIBUAT",
+                  "DIPROSES",
+                  "MENUNGGU_KLARIFIKASI",
+                  "SELESAI",
+                  "DITUTUP"
+                ]
+              }
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "PELAYANAN_DAN_KUALITAS",
+                  "SISTEM_DAN_INFRASTRUKTUR",
+                  "KEBIJAKAN_DAN_REGULASI"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelEntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}": {
+        "get": {
+          "tags": [
+            "pengaduan-entity-controller"
+          ],
+          "description": "get-pengaduan",
+          "operationId": "getItemResource-pengaduan-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "pengaduan-entity-controller"
+          ],
+          "description": "update-pengaduan",
+          "operationId": "putItemResource-pengaduan-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PengaduanRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-entity-controller"
+          ],
+          "description": "delete-pengaduan",
+          "operationId": "deleteItemResource-pengaduan-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "pengaduan-entity-controller"
+          ],
+          "description": "patch-pengaduan",
+          "operationId": "patchItemResource-pengaduan-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PengaduanRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}/chatMessages": {
+        "get": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "get-chatmessage-by-pengaduan-Id",
+          "operationId": "followPropertyReference-pengaduan-get_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelChatMessage"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "update-chatmessage-by-pengaduan-Id",
+          "operationId": "createPropertyReference-pengaduan-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelChatMessage"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelChatMessage"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "delete-chatmessage-by-pengaduan-Id",
+          "operationId": "deletePropertyReference-pengaduan-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "patch-chatmessage-by-pengaduan-Id",
+          "operationId": "createPropertyReference-pengaduan-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelChatMessage"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}/chatMessages/{propertyId}": {
+        "get": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "get-chatmessage-by-pengaduan-Id",
+          "operationId": "followPropertyReference-pengaduan-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelChatMessage"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "delete-chatmessage-by-pengaduan-Id",
+          "operationId": "deletePropertyReferenceId-pengaduan-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}/feedbacks": {
+        "get": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "get-feedback-by-pengaduan-Id",
+          "operationId": "followPropertyReference-pengaduan-get_2_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelFeedback"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "update-feedback-by-pengaduan-Id",
+          "operationId": "createPropertyReference-pengaduan-put_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelFeedback"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelFeedback"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "delete-feedback-by-pengaduan-Id",
+          "operationId": "deletePropertyReference-pengaduan-delete_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "patch-feedback-by-pengaduan-Id",
+          "operationId": "createPropertyReference-pengaduan-patch_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelFeedback"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}/feedbacks/{propertyId}": {
+        "get": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "get-feedback-by-pengaduan-Id",
+          "operationId": "followPropertyReference-pengaduan-get_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelFeedback"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "delete-feedback-by-pengaduan-Id",
+          "operationId": "deletePropertyReferenceId-pengaduan-delete_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}/user": {
+        "get": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "get-user-by-pengaduan-Id",
+          "operationId": "followPropertyReference-pengaduan-get_3_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "update-user-by-pengaduan-Id",
+          "operationId": "createPropertyReference-pengaduan-put_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "delete-user-by-pengaduan-Id",
+          "operationId": "deletePropertyReference-pengaduan-delete_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "patch-user-by-pengaduan-Id",
+          "operationId": "createPropertyReference-pengaduan-patch_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/pengaduans/{id}/user/{propertyId}": {
+        "get": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "get-user-by-pengaduan-Id",
+          "operationId": "followPropertyReference-pengaduan-get_3",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "pengaduan-property-reference-controller"
+          ],
+          "description": "delete-user-by-pengaduan-Id",
+          "operationId": "deletePropertyReferenceId-pengaduan-delete_2",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/profile": {
+        "get": {
+          "tags": [
+            "profile-controller"
+          ],
+          "operationId": "listAllFormsOfMetadata_1",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RepresentationModelObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/chatMessages": {
+        "get": {
+          "tags": [
+            "profile-controller"
+          ],
+          "operationId": "descriptor_1_1_1",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/alps+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/schema+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JsonSchema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/feedbacks": {
+        "get": {
+          "tags": [
+            "profile-controller"
+          ],
+          "operationId": "descriptor_1_1_2",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/alps+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/schema+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JsonSchema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/notifications": {
+        "get": {
+          "tags": [
+            "profile-controller"
+          ],
+          "operationId": "descriptor_1_1_3",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/alps+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/schema+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JsonSchema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/pengaduans": {
+        "get": {
+          "tags": [
+            "profile-controller"
+          ],
+          "operationId": "descriptor_1_1_4",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/alps+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/schema+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JsonSchema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/users": {
+        "get": {
+          "tags": [
+            "profile-controller"
+          ],
+          "operationId": "descriptor_1_1_5",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/alps+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                "application/schema+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/JsonSchema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users": {
+        "get": {
+          "tags": [
+            "user-entity-controller"
+          ],
+          "description": "get-user",
+          "operationId": "getCollectionResource-user-get_1",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Zero-based page index (0..N)",
+              "required": false,
+              "schema": {
+                "minimum": 0,
+                "type": "integer",
+                "default": 0
+              }
+            },
+            {
+              "name": "size",
+              "in": "query",
+              "description": "The size of the page to be returned",
+              "required": false,
+              "schema": {
+                "minimum": 1,
+                "type": "integer",
+                "default": 20
+              }
+            },
+            {
+              "name": "sort",
+              "in": "query",
+              "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelUser"
+                  }
+                },
+                "application/x-spring-data-compact+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PagedModelEntityModelUser"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "user-entity-controller"
+          ],
+          "description": "create-user",
+          "operationId": "postCollectionResource-user-post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users/search/existsByEmail": {
+        "get": {
+          "tags": [
+            "user-search-controller"
+          ],
+          "operationId": "executeSearch-user-get",
+          "parameters": [
+            {
+              "name": "email",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/users/search/existsByUsername": {
+        "get": {
+          "tags": [
+            "user-search-controller"
+          ],
+          "operationId": "executeSearch-user-get_1",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/users/search/findByEmail": {
+        "get": {
+          "tags": [
+            "user-search-controller"
+          ],
+          "operationId": "executeSearch-user-get_2",
+          "parameters": [
+            {
+              "name": "email",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/users/search/findByUsername": {
+        "get": {
+          "tags": [
+            "user-search-controller"
+          ],
+          "operationId": "executeSearch-user-get_3",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "get": {
+          "tags": [
+            "user-entity-controller"
+          ],
+          "description": "get-user",
+          "operationId": "getItemResource-user-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "user-entity-controller"
+          ],
+          "description": "update-user",
+          "operationId": "putItemResource-user-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "user-entity-controller"
+          ],
+          "description": "delete-user",
+          "operationId": "deleteItemResource-user-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "user-entity-controller"
+          ],
+          "description": "patch-user",
+          "operationId": "patchItemResource-user-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequestBody"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/users/{id}/pengaduanList": {
+        "get": {
+          "tags": [
+            "user-property-reference-controller"
+          ],
+          "description": "get-pengaduan-by-user-Id",
+          "operationId": "followPropertyReference-user-get_1",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelPengaduan"
+                  }
+                },
+                "text/uri-list": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "user-property-reference-controller"
+          ],
+          "description": "update-pengaduan-by-user-Id",
+          "operationId": "createPropertyReference-user-put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelPengaduan"
+                  }
+                }
+              }
+            },
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "user-property-reference-controller"
+          ],
+          "description": "delete-pengaduan-by-user-Id",
+          "operationId": "deletePropertyReference-user-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "user-property-reference-controller"
+          ],
+          "description": "patch-pengaduan-by-user-Id",
+          "operationId": "createPropertyReference-user-patch",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelObject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelPengaduan"
+                  }
+                }
+              }
+            },
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/users/{id}/pengaduanList/{propertyId}": {
+        "get": {
+          "tags": [
+            "user-property-reference-controller"
+          ],
+          "description": "get-pengaduan-by-user-Id",
+          "operationId": "followPropertyReference-user-get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CollectionModelPengaduan"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "user-property-reference-controller"
+          ],
+          "description": "delete-pengaduan-by-user-Id",
+          "operationId": "deletePropertyReferenceId-user-delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "propertyId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/api/user/profile/edit": {
+        "put": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "editProfile",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProfileRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/user/profile/change-password": {
+        "put": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "changePassword",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pengaduan/{id}/status": {
+        "put": {
+          "tags": [
+            "Pengaduan"
+          ],
+          "operationId": "updateStatus",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            },
+            {
+              "name": "status",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pengaduan/{id}/priority": {
+        "put": {
+          "tags": [
+            "Pengaduan"
+          ],
+          "operationId": "updatePriority",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            },
+            {
+              "name": "priority",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pengaduan/{id}/complete": {
+        "put": {
+          "tags": [
+            "Pengaduan"
+          ],
+          "operationId": "markPengaduanAsCompleted",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pengaduan/{id}/category": {
+        "put": {
+          "tags": [
+            "Pengaduan"
+          ],
+          "operationId": "updateCategory",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/notifications/{notificationId}/mark-as-read": {
+        "put": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "markNotificationAsRead",
+          "parameters": [
+            {
+              "name": "notificationId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/notifications/mark-all-as-read": {
+        "put": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "markAllAsRead",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pengaduan": {
+        "get": {
+          "tags": [
+            "Pengaduan"
+          ],
+          "operationId": "getPengaduanList",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PengaduanResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Pengaduan"
+          ],
+          "operationId": "createPengaduan",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PengaduanRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/feedback/{pengaduanId}": {
+        "get": {
+          "tags": [
+            "Feedback"
+          ],
+          "operationId": "getFeedback",
+          "parameters": [
+            {
+              "name": "pengaduanId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FeedbackResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Feedback"
+          ],
+          "operationId": "createFeedback",
+          "parameters": [
+            {
+              "name": "pengaduanId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FeedbackResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/chat/{pengaduanId}": {
+        "get": {
+          "tags": [
+            "Chat Message"
+          ],
+          "operationId": "getChatHistory",
+          "parameters": [
+            {
+              "name": "pengaduanId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ChatMessageResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Chat Message"
+          ],
+          "operationId": "sendMessage",
+          "parameters": [
+            {
+              "name": "pengaduanId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatMessageRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/auth/register": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "operationId": "register",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/auth/login": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "operationId": "login",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/user/profile": {
+        "get": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "getProfile",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserProfileResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/notifications": {
+        "get": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "getNotifications",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/user/profile/delete": {
+        "delete": {
+          "tags": [
+            "Notification"
+          ],
+          "operationId": "deleteAccount",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/hal+json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "AbstractJsonSchemaPropertyObject": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "readOnly": {
+              "type": "boolean"
+            }
+          }
+        },
+        "Item": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/components/schemas/AbstractJsonSchemaPropertyObject"
+              }
+            },
+            "requiredProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "JsonSchema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/components/schemas/AbstractJsonSchemaPropertyObject"
+              }
+            },
+            "requiredProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "definitions": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "type": {
+              "type": "string"
+            },
+            "$schema": {
+              "type": "string"
+            }
+          }
+        },
+        "Links": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/components/schemas/Link"
+          }
+        },
+        "RepresentationModelObject": {
+          "type": "object",
+          "properties": {
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "EntityModelFeedback": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "keramahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kualitasRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kecepatanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kemudahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            },
+            "pelaporName": {
+              "type": "string"
+            },
+            "pelaporEmail": {
+              "type": "string"
+            },
+            "pelaporPhoneNumber": {
+              "type": "string"
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "PageMetadata": {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "totalElements": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "number": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "PagedModelEntityModelFeedback": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "feedbacks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelFeedback"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "page": {
+              "$ref": "#/components/schemas/PageMetadata"
+            }
+          }
+        },
+        "EntityModelPengaduan": {
+          "required": [
+            "description",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "title": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "kodeTiket": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "BERHASIL_DIBUAT",
+                "DIPROSES",
+                "MENUNGGU_KLARIFIKASI",
+                "SELESAI",
+                "DITUTUP"
+              ]
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "TINGGI",
+                "SEDANG",
+                "RENDAH"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "PELAYANAN_DAN_KUALITAS",
+                "SISTEM_DAN_INFRASTRUKTUR",
+                "KEBIJAKAN_DAN_REGULASI"
+              ]
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "CollectionModelObject": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "EntityModelUser": {
+          "required": [
+            "email",
+            "password",
+            "phoneNumber",
+            "username"
+          ],
+          "type": "object",
+          "properties": {
+            "username": {
+              "maxLength": 20,
+              "minLength": 0,
+              "pattern": "^(?=\\D*\\d{0,5}\\D*$)[a-zA-Z0-9]+$",
+              "type": "string"
+            },
+            "password": {
+              "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "phoneNumber": {
+              "pattern": "^[0-9]+$",
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "PELAPOR",
+                "ADMIN_UTAMA",
+                "ADMIN_KATEGORI"
+              ]
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "EntityModelChatMessage": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "PagedModelEntityModelChatMessage": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "chatMessages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "page": {
+              "$ref": "#/components/schemas/PageMetadata"
+            }
+          }
+        },
+        "CollectionModelEntityModelChatMessage": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "chatMessages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelChatMessage"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "EntityModelNotification": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "recipient": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "read": {
+              "type": "boolean"
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "PagedModelEntityModelNotification": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "notifications": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "page": {
+              "$ref": "#/components/schemas/PageMetadata"
+            }
+          }
+        },
+        "CollectionModelEntityModelNotification": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "notifications": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelNotification"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "PagedModelEntityModelPengaduan": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "pengaduans": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "page": {
+              "$ref": "#/components/schemas/PageMetadata"
+            }
+          }
+        },
+        "CollectionModelChatMessage": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "chatMessages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatMessageResponse"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "CollectionModelFeedback": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "feedbacks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackResponse"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "CollectionModelEntityModelPengaduan": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "pengaduans": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelPengaduan"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "PagedModelEntityModelUser": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityModelUser"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "page": {
+              "$ref": "#/components/schemas/PageMetadata"
+            }
+          }
+        },
+        "CollectionModelPengaduan": {
+          "type": "object",
+          "properties": {
+            "_embedded": {
+              "type": "object",
+              "properties": {
+                "pengaduans": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PengaduanResponse"
+                  }
+                }
+              }
+            },
+            "_links": {
+              "$ref": "#/components/schemas/Links"
+            }
+          }
+        },
+        "ChatMessageRequestBody": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "pengaduan": {
+              "type": "string"
+            },
+            "sender": {
+              "type": "string"
+            },
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "FeedbackRequestBody": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "pengaduan": {
+              "type": "string"
+            },
+            "user": {
+              "type": "string"
+            },
+            "keramahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kualitasRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kecepatanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kemudahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            },
+            "pelaporName": {
+              "type": "string"
+            },
+            "pelaporEmail": {
+              "type": "string"
+            },
+            "pelaporPhoneNumber": {
+              "type": "string"
+            }
+          }
+        },
+        "PengaduanRequestBody": {
+          "required": [
+            "description",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "title": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "kodeTiket": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "BERHASIL_DIBUAT",
+                "DIPROSES",
+                "MENUNGGU_KLARIFIKASI",
+                "SELESAI",
+                "DITUTUP"
+              ]
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "TINGGI",
+                "SEDANG",
+                "RENDAH"
+              ]
+            },
+            "user": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "PELAYANAN_DAN_KUALITAS",
+                "SISTEM_DAN_INFRASTRUKTUR",
+                "KEBIJAKAN_DAN_REGULASI"
+              ]
+            },
+            "chatMessages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "feedbacks": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "UserRequestBody": {
+          "required": [
+            "email",
+            "password",
+            "phoneNumber",
+            "username"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "username": {
+              "maxLength": 20,
+              "minLength": 0,
+              "pattern": "^(?=\\D*\\d{0,5}\\D*$)[a-zA-Z0-9]+$",
+              "type": "string"
+            },
+            "password": {
+              "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "phoneNumber": {
+              "pattern": "^[0-9]+$",
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "PELAPOR",
+                "ADMIN_UTAMA",
+                "ADMIN_KATEGORI"
+              ]
+            },
+            "pengaduanList": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "NotificationRequestBody": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "message": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "recipient": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "user": {
+              "type": "string"
+            },
+            "read": {
+              "type": "boolean"
+            }
+          }
+        },
+        "ChatMessageResponse": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "FeedbackResponse": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "keramahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kualitasRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kecepatanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kemudahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            },
+            "pelaporName": {
+              "type": "string"
+            },
+            "pelaporEmail": {
+              "type": "string"
+            },
+            "pelaporPhoneNumber": {
+              "type": "string"
+            }
+          }
+        },
+        "PengaduanResponse": {
+          "required": [
+            "description",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "title": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "kodeTiket": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "BERHASIL_DIBUAT",
+                "DIPROSES",
+                "MENUNGGU_KLARIFIKASI",
+                "SELESAI",
+                "DITUTUP"
+              ]
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "TINGGI",
+                "SEDANG",
+                "RENDAH"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "PELAYANAN_DAN_KUALITAS",
+                "SISTEM_DAN_INFRASTRUKTUR",
+                "KEBIJAKAN_DAN_REGULASI"
+              ]
+            }
+          }
+        },
+        "UpdateProfileRequest": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phoneNumber": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        },
+        "ChangePasswordRequest": {
+          "type": "object",
+          "properties": {
+            "oldPassword": {
+              "type": "string"
+            },
+            "newPassword": {
+              "type": "string"
+            }
+          }
+        },
+        "PengaduanRequest": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          }
+        },
+        "FeedbackRequest": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "keramahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kualitasRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kecepatanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "kemudahanRating": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "message": {
+              "maxLength": 150,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        },
+        "ChatMessageRequest": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "RegisterRequest": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "phoneNumber": {
+              "type": "string"
+            }
+          }
+        },
+        "AuthRequest": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "AuthResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        },
+        "UserProfileResponse": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phoneNumber": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        },
+        "NotificationResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "message": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "type": {
+              "type": "string"
+            },
+            "read": {
+              "type": "boolean"
+            }
+          }
+        },
+        "Link": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            },
+            "hreflang": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "deprecation": {
+              "type": "string"
+            },
+            "profile": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "templated": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
